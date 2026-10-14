@@ -9,7 +9,7 @@
 
 **Agent 开发 · 后端 / 全栈** · 2028 届本科在读
 
-[![Merged PRs](https://img.shields.io/badge/Merged%20PRs-12-8250DF?style=flat-square&logo=git&logoColor=white)](https://github.com/sjr666666/sjr666666)
+[![Merged PRs](https://img.shields.io/badge/Merged%20PRs-13-8250DF?style=flat-square&logo=git&logoColor=white)](https://github.com/sjr666666/sjr666666)
 
 </div>
 
@@ -19,7 +19,7 @@
 </picture>
 
 <!-- STATS:BEGIN -->
-**12** 个 PR 已被合并（9 个提给他人仓库 · 3 个自有项目）· 数据由 [`generate_stats.py`](./scripts/generate_stats.py) 每日直连 GitHub API 刷新
+**13** 个 PR 已被合并（10 个提给他人仓库 · 3 个自有项目）· 数据由 [`generate_stats.py`](./scripts/generate_stats.py) 每日直连 GitHub API 刷新
 <!-- STATS:END -->
 
 ---
