@@ -1,23 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="962" height="434" viewBox="0 0 962 434" role="img" aria-label="已合并的 Pull Request">
-<rect x="0.5" y="0.5" width="961" height="433" rx="12" fill="#0D1117" stroke="#30363D"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="962" height="476" viewBox="0 0 962 476" role="img" aria-label="已合并的 Pull Request">
+<rect x="0.5" y="0.5" width="961" height="475" rx="12" fill="#0D1117" stroke="#30363D"/>
 <rect x="0" y="0" width="962" height="3" rx="1.5" fill="#A371F7" fill-opacity="0.9"/>
 <circle cx="44" cy="50" r="3.2" fill="#A371F7"/>
 <text x="56" y="54" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif" font-size="12" fill="#A371F7" font-weight="700" letter-spacing="2.4">MERGED PULL REQUESTS</text>
 <text x="922" y="54" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="12" fill="#9198A1" font-weight="normal" text-anchor="end">github.com/sjr666666</text>
-<text x="35" y="146" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="84" fill="#F0F6FC" font-weight="700" letter-spacing="-3.5">14</text>
+<text x="35" y="146" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="84" fill="#F0F6FC" font-weight="700" letter-spacing="-3.5">15</text>
 <text x="160" y="146" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif" font-size="20" fill="#F0F6FC" font-weight="600" letter-spacing="-0.2">个 PR 已合并</text>
-<text x="40" y="174" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif" font-size="14.5" fill="#9198A1" font-weight="500">11 个提给他人仓库 · 3 个自有项目</text>
+<text x="40" y="174" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif" font-size="14.5" fill="#9198A1" font-weight="500">12 个提给他人仓库 · 3 个自有项目</text>
 <line x1="40" y1="202" x2="922" y2="202" stroke="#21262D"/>
 <text x="40" y="238" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="18" fill="#F0F6FC" font-weight="700" letter-spacing="0.2">bytedance/deer-flow</text>
 <text x="770" y="238" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif" font-size="15.5" fill="#F0F6FC" font-weight="700" text-anchor="end">6 个 PR</text>
 <text x="922" y="238" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="16" fill="#9198A1" font-weight="600" text-anchor="end">★ 83.9k</text>
-<text x="40" y="280" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="18" fill="#F0F6FC" font-weight="700" letter-spacing="0.2">langgenius/dify-plugins</text>
+<text x="40" y="280" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="18" fill="#F0F6FC" font-weight="700" letter-spacing="0.2">stanfordnlp/dspy</text>
 <text x="770" y="280" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif" font-size="15.5" fill="#F0F6FC" font-weight="700" text-anchor="end">1 个 PR</text>
-<text x="922" y="280" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="16" fill="#9198A1" font-weight="600" text-anchor="end">★ 555</text>
-<text x="40" y="322" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="18" fill="#F0F6FC" font-weight="700" letter-spacing="0.2">helsome/folio</text>
-<text x="770" y="322" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif" font-size="15.5" fill="#F0F6FC" font-weight="700" text-anchor="end">4 个 PR</text>
-<text x="922" y="322" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="16" fill="#9198A1" font-weight="600" text-anchor="end">★ 273</text>
-<line x1="40" y1="390" x2="922" y2="390" stroke="#21262D"/>
-<text x="40" y="414" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif" font-size="13" fill="#9198A1" font-weight="normal">数据来源 GitHub REST API · 每日自动刷新</text>
-<text x="922" y="414" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="13" fill="#9198A1" font-weight="normal" text-anchor="end">更新于 2026-10-15 16:15 (UTC+8)</text>
+<text x="922" y="280" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="16" fill="#9198A1" font-weight="600" text-anchor="end">★ 38.7k</text>
+<text x="40" y="322" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="18" fill="#F0F6FC" font-weight="700" letter-spacing="0.2">langgenius/dify-plugins</text>
+<text x="770" y="322" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif" font-size="15.5" fill="#F0F6FC" font-weight="700" text-anchor="end">1 个 PR</text>
+<text x="922" y="322" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="16" fill="#9198A1" font-weight="600" text-anchor="end">★ 556</text>
+<text x="40" y="364" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="18" fill="#F0F6FC" font-weight="700" letter-spacing="0.2">helsome/folio</text>
+<text x="770" y="364" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif" font-size="15.5" fill="#F0F6FC" font-weight="700" text-anchor="end">4 个 PR</text>
+<text x="922" y="364" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="16" fill="#9198A1" font-weight="600" text-anchor="end">★ 273</text>
+<line x1="40" y1="432" x2="922" y2="432" stroke="#21262D"/>
+<text x="40" y="456" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif" font-size="13" fill="#9198A1" font-weight="normal">数据来源 GitHub REST API · 每日自动刷新</text>
+<text x="922" y="456" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="13" fill="#9198A1" font-weight="normal" text-anchor="end">更新于 2026-10-16 02:06 (UTC+8)</text>
 </svg>
