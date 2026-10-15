@@ -1,18 +1,19 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Merged PR Observatory — 静态资源生成器（极简版）
+Merged PR Observatory — 静态资源生成器
 
 只统计**已合并**的 Pull Request，生成 **亮 / 暗两版** 极简 SVG 卡片
 （README 用 <picture> + prefers-color-scheme 按 GitHub 主题自动切换），
 并把一行统计小字回写 README.md 的标记区间。
 
-设计原则（用户反馈驱动：2026-10-01 二次精简，2026-10-10 补 PR 计数）：
-- 一个焦点数字（已合并 PR 总数）+ 一条支撑链：每个上游仓库一行，
-  显示**仓库名 + 该仓库已合并 PR 数 + ★ 星级**。PR 标题 / 行数 / 文件数 /
-  合并日期一律不上卡片（改按仓库聚合，避免退化成明细表）。
-- 排序按仓库含金量：上游仓库以 stars 降序（公开可验证、每日随数据刷新），
-  同仓库内按 PR 号；自有项目不进列表（已在「代表项目」段展示）。
+设计原则（用户反馈驱动：2026-10-01 二次精简，2026-10-10 补 PR 计数，
+2026-10-16 加组织 Logo 与细节升级）：
+- 一个焦点数字（已合并 PR 总数）+ 一条支撑链：每个上游仓库一行 ——
+  行首为**组织 Logo**（GitHub 官方头像，base64 内嵌、不依赖外部图床），
+  随后是仓库名、该仓库已合并 PR 数、★ 星级（官方 octicon 图标）。
+  PR 标题 / 行数 / 文件数 / 合并日期一律不上卡片。
+- 排序按仓库含金量：上游仓库以 stars 降序（公开可验证、每日随数据刷新）。
 - 贡献贪吃蛇（Platane/snk）由 .github/workflows/snake.yml 独立生成，
   输出在 output 分支，README 顶部引用。
 
@@ -26,6 +27,7 @@ Merged PR Observatory — 静态资源生成器（极简版）
 
 from __future__ import annotations
 
+import base64
 import json
 import os
 import re
@@ -59,6 +61,16 @@ DARK = {
 FONT = ("-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',"
         "'Hiragino Sans GB','Microsoft YaHei',sans-serif")
 MONO = "ui-monospace,'SF Mono',Menlo,Consolas,monospace"
+
+# GitHub 官方 octicon star-16（MIT），行内星标图标（16×16 视图框）
+STAR16 = ("M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 "
+          ".416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 "
+          "12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 "
+          "6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 "
+          ".25Zm0 2.445L6.615 5.5a.75.75 0 0 1-.564.41l-3.097.45 2.24 "
+          "2.184a.75.75 0 0 1 .216.664l-.528 3.084 2.769-1.456a.75.75 0 0 1 "
+          ".698 0l2.77 1.456-.53-3.084a.75.75 0 0 1 .216-.664l2.24-2.183-"
+          "3.096-.45a.75.75 0 0 1-.564-.41L8 2.694Z")
 
 
 # ---------------------------------------------------------------- 取数
@@ -96,11 +108,35 @@ def parse_ts(s):
             if s else None)
 
 
-def collect(user: str) -> list[dict]:
+def fetch_avatar(url: str) -> str | None:
+    """把组织头像抓成 base64 data URI：Logo 内嵌进 SVG，不依赖外部图床。"""
+    try:
+        sep = "&" if "?" in url else "?"
+        req = urllib.request.Request(
+            f"{url}{sep}size=64",
+            headers={"User-Agent": "merged-pr-observatory"})
+        with urllib.request.urlopen(req, timeout=20) as r:
+            data = r.read()
+        if data[:8] == b"\x89PNG\r\n\x1a\n":
+            mime = "image/png"
+        elif data[:2] == b"\xff\xd8":
+            mime = "image/jpeg"
+        else:
+            return None
+        if not 0 < len(data) <= 256 * 1024:
+            return None
+        return f"data:{mime};base64," + base64.b64encode(data).decode("ascii")
+    except Exception as e:  # noqa: BLE001 —— 头像失败不阻塞主流程
+        print(f"  ! avatar {url}: {e}", file=sys.stderr)
+        return None
+
+
+def collect(user: str) -> tuple[list[dict], dict[str, str]]:
     cache = ASSETS / "stats.json"
     if "--offline" in sys.argv and cache.exists():
         print(f"  [offline] 读取缓存 {cache.relative_to(ROOT)}")
-        return json.loads(cache.read_text(encoding="utf-8"))["prs"]
+        d = json.loads(cache.read_text(encoding="utf-8"))
+        return d["prs"], d.get("avatars", {})
 
     raw = search_prs(user)
     repos: dict[str, dict] = {}
@@ -111,11 +147,14 @@ def collect(user: str) -> list[dict]:
         if repo_api not in repos:
             try:
                 d = gh_api(f"/repos/{repo_api}")
-                repos[repo_api] = {"language": d.get("language") or "Other",
-                                   "stars": d.get("stargazers_count") or 0}
+                repos[repo_api] = {
+                    "language": d.get("language") or "Other",
+                    "stars": d.get("stargazers_count") or 0,
+                    "avatar_url": (d.get("owner") or {}).get("avatar_url") or "",
+                }
             except Exception as e:
                 print(f"  ! repo {repo_api}: {e}", file=sys.stderr)
-                repos[repo_api] = {"language": "Other", "stars": 0}
+                repos[repo_api] = {"language": "Other", "stars": 0, "avatar_url": ""}
 
         pr = gh_api(f"/repos/{repo_api}/pulls/{it['number']}")
         merged_at = pr.get("merged_at")
@@ -139,7 +178,26 @@ def collect(user: str) -> list[dict]:
         })
 
     prs.sort(key=lambda p: p["created"] or "")
-    return prs
+
+    # 组织 Logo：按 owner 去重抓取；失败时回退旧缓存，再不行由卡片画字母占位
+    old: dict[str, str] = {}
+    if cache.exists():
+        try:
+            old = json.loads(cache.read_text(encoding="utf-8")).get("avatars", {})
+        except Exception:  # noqa: BLE001
+            old = {}
+    avatars: dict[str, str] = {}
+    seen: set[str] = set()
+    for p in prs:
+        owner = p["owner"]
+        if p["status"] != "merged" or owner == USER or owner in seen:
+            continue
+        seen.add(owner)
+        url = repos[p["repo"]].get("avatar_url") or f"https://github.com/{owner}.png"
+        data_uri = fetch_avatar(url) or old.get(owner)
+        if data_uri:
+            avatars[owner] = data_uri
+    return prs, avatars
 
 
 # ---------------------------------------------------------------- 工具
@@ -164,11 +222,13 @@ def tx(x, y, s, size=12, fill="#000", weight="normal", anchor="start",
 
 
 # ---------------------------------------------------------------- 卡片（极简）
-def card_merged(prs: list[dict], C: dict) -> str:
-    """962 宽、高度自适应：焦点数字 + 每上游仓库一行（仓库名 + PR 数 + ★）。"""
+def card_merged(prs: list[dict], C: dict, avatars: dict[str, str]) -> str:
+    """962 宽、高度自适应：焦点数字 + 每上游仓库一行（Logo + 仓库名 + PR 数 + ★）。"""
     W = 962
     L, R = 40, W - 40
     PRC = R - 152          # PR 计数列的右基线（与最右的 ★ 列留出固定间距）
+    SZ, RX = 30, 8         # 行首 Logo 的尺寸与圆角
+    NX = L + SZ + 16       # 仓库名起始 x（与 Logo 留 16px 间距）
 
     merged = [p for p in prs if p["status"] == "merged"]
     upstream = [p for p in merged if p["owner"] != USER]
@@ -186,6 +246,7 @@ def card_merged(prs: list[dict], C: dict) -> str:
     rest = len(groups) - len(shown)
 
     b: list[str] = []
+    defs: list[str] = []
     # 眉头
     b.append(f'<circle cx="{L + 4}" cy="50" r="3.2" fill="{C["accent"]}"/>')
     b.append(tx(L + 16, 54, "MERGED PULL REQUESTS", 12, C["accent"], "700", ls="2.4"))
@@ -199,27 +260,55 @@ def card_merged(prs: list[dict], C: dict) -> str:
                 14.5, C["text2"], "500"))
     b.append(f'<line x1="{L}" y1="202" x2="{R}" y2="202" stroke="{C["hair"]}"/>')
 
-    # 仓库行：仓库名 + 该仓库已合并 PR 数 + 星级（列表主体，字号压过副标题一级）
-    y = 238
-    for repo, items in shown:
+    # 仓库行：组织 Logo + 仓库名 + 该仓库已合并 PR 数 + 星级（列表主体）
+    y = 242
+    for i, (repo, items) in enumerate(shown):
         stars = max(p.get("stars") or 0 for p in items)
-        b.append(tx(L, y, repo, 18, C["text"], "700", family=MONO, ls="0.2"))
+        owner = repo.split("/")[0]
+        ly = round(y - SZ / 2 - 6.3, 1)       # Logo 顶边：与文字光学居中对齐
+        av = avatars.get(owner)
+        if av:
+            defs.append(f'<clipPath id="lg{i}"><rect x="{L}" y="{ly}" '
+                        f'width="{SZ}" height="{SZ}" rx="{RX}"/></clipPath>')
+            b.append(f'<rect x="{L}" y="{ly}" width="{SZ}" height="{SZ}" '
+                     f'rx="{RX}" fill="#FFFFFF"/>')
+            b.append(f'<image x="{L}" y="{ly}" width="{SZ}" height="{SZ}" '
+                     f'href="{av}" clip-path="url(#lg{i})" '
+                     f'preserveAspectRatio="xMidYMid slice"/>')
+            b.append(f'<rect x="{L}" y="{ly}" width="{SZ}" height="{SZ}" '
+                     f'rx="{RX}" fill="none" stroke="{C["border"]}"/>')
+        else:
+            b.append(f'<rect x="{L}" y="{ly}" width="{SZ}" height="{SZ}" '
+                     f'rx="{RX}" fill="{C["chip"]}" stroke="{C["border"]}"/>')
+            b.append(tx(L + SZ / 2, round(ly + SZ / 2 + 5.3, 1), owner[0].upper(),
+                        15, C["text2"], "700", "middle"))
+        b.append(tx(NX, y, repo, 18, C["text"], "700", family=MONO, ls="0.2"))
         b.append(tx(PRC, y, f"{len(items)} 个 PR", 15.5, C["text"], "700", "end"))
-        b.append(tx(R, y, f"★ {fmt_stars(stars)}", 16, C["text2"], "600", "end", MONO))
-        y += 42
+        star = fmt_stars(stars)
+        sx = R - len(star) * 0.58 * 16 - 6 - 15   # 星标图标放计数左侧（按最宽等宽字宽估算）
+        b.append(f'<g transform="translate({sx:.1f} {y - 13}) scale(0.9375)" '
+                 f'fill="{C["text2"]}"><path d="{STAR16}"/></g>')
+        b.append(tx(R, y, star, 16, C["text2"], "600", "end", MONO))
+        y += 46
     if rest > 0:
-        b.append(tx(L, y, f"… 另有 {rest} 个仓库已合并 PR", 15, C["text3"], "500"))
-        y += 42
+        b.append(tx(NX, y, f"… 另有 {rest} 个仓库已合并 PR", 15, C["text3"], "500"))
+        y += 46
 
     H = int(y + 26 + 44)
     stamp = datetime.now(TZ8).strftime("%Y-%m-%d %H:%M (UTC+8)")
 
     head = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" '
             f'viewBox="0 0 {W} {H}" role="img" aria-label="已合并的 Pull Request">',
+            f'<title>已合并的 Pull Request · github.com/{USER}</title>',
+            '<defs>',
+            f'<clipPath id="card"><rect x="0.5" y="0.5" width="{W - 1}" '
+            f'height="{H - 1}" rx="12"/></clipPath>',
+            *defs,
+            '</defs>',
             f'<rect x="0.5" y="0.5" width="{W - 1}" height="{H - 1}" rx="12" '
             f'fill="{C["bg"]}" stroke="{C["border"]}"/>',
             f'<rect x="0" y="0" width="{W}" height="3" rx="1.5" fill="{C["accent"]}" '
-            f'fill-opacity="0.9"/>']
+            f'fill-opacity="0.9" clip-path="url(#card)"/>']
     tail = [f'<line x1="{L}" y1="{H - 44}" x2="{R}" y2="{H - 44}" stroke="{C["hair"]}"/>',
             tx(L, H - 20, "数据来源 GitHub REST API · 每日自动刷新", 13, C["text2"]),
             tx(R, H - 20, f"更新于 {stamp}", 13, C["text2"], "normal", "end", MONO),
@@ -247,13 +336,13 @@ def sync(md: str, prs: list[dict]) -> str:
 def main() -> int:
     ASSETS.mkdir(exist_ok=True)
     print(f"抓取 @{USER} 的 Pull Request ...")
-    prs = collect(USER)
+    prs, avatars = collect(USER)
     merged = [p for p in prs if p["status"] == "merged"]
-    print(f"  共 {len(prs)} 个 PR，其中已合并 {len(merged)} 个")
+    print(f"  共 {len(prs)} 个 PR，其中已合并 {len(merged)} 个；组织 Logo {len(avatars)} 枚")
 
     for name, palette in (("light", LIGHT), ("dark", DARK)):
         (ASSETS / f"merged-prs-{name}.svg").write_text(
-            card_merged(prs, palette), encoding="utf-8")
+            card_merged(prs, palette, avatars), encoding="utf-8")
         print(f"  assets/merged-prs-{name}.svg")
 
     if README.exists():
@@ -263,7 +352,8 @@ def main() -> int:
     if "--offline" not in sys.argv:
         (ASSETS / "stats.json").write_text(
             json.dumps({"generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-                        "user": USER, "prs": prs}, ensure_ascii=False, indent=1),
+                        "user": USER, "avatars": avatars, "prs": prs},
+                       ensure_ascii=False, indent=1),
             encoding="utf-8")
         print("  assets/stats.json")
     return 0
