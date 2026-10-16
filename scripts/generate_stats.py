@@ -33,11 +33,12 @@ import os
 import re
 import subprocess
 import sys
+import time
 import urllib.request
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-USER = "sjr666666"
+USER = "shi-felix"
 ROOT = Path(__file__).resolve().parent.parent
 ASSETS = ROOT / "assets"
 README = ROOT / "README.md"
@@ -85,9 +86,17 @@ def gh_api(path: str) -> dict:
                      "User-Agent": "merged-pr-observatory"})
         with urllib.request.urlopen(req, timeout=30) as r:
             return json.loads(r.read().decode("utf-8"))
-    out = subprocess.run(["gh", "api", path], capture_output=True, text=True,
-                         encoding="utf-8", check=True)
-    return json.loads(out.stdout)
+    # 本地走 gh CLI；偶发网络/代理抖动时重试，避免整条生成链中断
+    last = ""
+    for attempt in range(3):
+        out = subprocess.run(["gh", "api", path], capture_output=True, text=True,
+                             encoding="utf-8")
+        if out.returncode == 0:
+            return json.loads(out.stdout)
+        last = (out.stderr or "").strip()[-200:]
+        if attempt < 2:
+            time.sleep(1.5 * (attempt + 1))
+    raise RuntimeError(f"gh api {path} 重试 3 次仍失败: {last}")
 
 
 def search_prs(user: str) -> list[dict]:
