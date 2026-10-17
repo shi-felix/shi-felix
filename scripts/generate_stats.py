@@ -150,12 +150,21 @@ def collect(user: str) -> tuple[list[dict], dict[str, str]]:
     raw = search_prs(user)
     repos: dict[str, dict] = {}
     prs: list[dict] = []
+    skipped: set[str] = set()
 
     for it in raw:
         repo_api = it["repository_url"].split("/repos/")[-1]
+        if repo_api in skipped:
+            continue
         if repo_api not in repos:
             try:
                 d = gh_api(f"/repos/{repo_api}")
+                # 私有仓库不计入公开统计：本地带 PAT 能搜到，CI 的 GITHUB_TOKEN 搜不到，
+                # 不统一过滤会导致本地跑出 15、CI 跑出 12，数字来回跳。
+                if d.get("private"):
+                    skipped.add(repo_api)
+                    print(f"  - skip private repo {repo_api}")
+                    continue
                 repos[repo_api] = {
                     "language": d.get("language") or "Other",
                     "stars": d.get("stargazers_count") or 0,
@@ -265,8 +274,10 @@ def card_merged(prs: list[dict], C: dict, avatars: dict[str, str]) -> str:
     n = str(len(merged))
     b.append(tx(L - 5, 146, n, 84, C["text"], "700", family=MONO, ls="-3.5"))
     b.append(tx(L + 52 * len(n) + 16, 146, "个 PR 已合并", 20, C["text"], "600", ls="-0.2"))
-    b.append(tx(L, 174, f"{len(upstream)} 个提给他人仓库 · {len(own)} 个自有项目",
-                14.5, C["text2"], "500"))
+    sub = f"{len(upstream)} 个提给他人仓库"
+    if own:
+        sub += f" · {len(own)} 个自有项目"
+    b.append(tx(L, 174, sub, 14.5, C["text2"], "500"))
     b.append(f'<line x1="{L}" y1="202" x2="{R}" y2="202" stroke="{C["hair"]}"/>')
 
     # 仓库行：组织 Logo + 仓库名 + 该仓库已合并 PR 数 + 星级（列表主体）
@@ -335,7 +346,9 @@ def sync(md: str, prs: list[dict]) -> str:
 
     lines = ["<!-- STATS:BEGIN -->",
              f"**{len(merged)}** 个 PR 已被合并"
-             f"（{len(upstream)} 个提给他人仓库 · {len(own)} 个自有项目）· 数据由 "
+             + (f"（{len(upstream)} 个提给他人仓库 · {len(own)} 个自有项目）" if own
+                else f"（{len(upstream)} 个提给他人仓库）")
+             + "· 数据由 "
              "[`generate_stats.py`](./scripts/generate_stats.py) 每日直连 GitHub API 刷新",
              "<!-- STATS:END -->"]
     return re.sub(r"<!-- STATS:BEGIN -->.*?<!-- STATS:END -->", "\n".join(lines), md, flags=re.S)
