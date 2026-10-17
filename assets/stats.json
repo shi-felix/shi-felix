@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-17T04:00:23Z",
+ "generated_at": "2026-10-17T04:01:55Z",
  "user": "shi-felix",
  "avatars": {
   "helsome": "data:image/jpeg;base64,/9j/2wCEAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDIBCQkJDAsMGA0NGDIhHCEyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMv/AABEIAEAAQAMBIgACEQEDEQH/xAGiAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgsQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+gEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoLEQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/APn+iitTRNPN9cO20MIhu2t0P1oWoDbDQdT1Ibra0dk5+c8Afia6G0+GurTn97cWsPGcFmZseuAK7HTru3i2WqKvykA44B45rZTVWkH7m3dj93aMAj8+lbxhHqQ5PoeV6v4C1fS7Q3aCO7gQEyNAcmPHqOuMc5rlq9//ALBuLlmkjvxG8hy0e3cv45PP5V4t4i0K90DV5rW7h2DcTG4HyuueCP8ADtUThbUcZXMmiiisygrqtElihto0fajhG5x1yc/n0/KuVq7aXBWRST0wPr6U07CaO8sH8sCV5w8RzsPC/mTXR2ustMqwRHcqjkqN36iuChvhIYoCqLGWAzJkLz64/pXRWJ/s2RLmLBiYhJCmQu0/ieQevP4Van2FynTT6nPBafKGZj2UHj8qwtd8PXmvaFu+1yGRnE0Anx8+FIx/s9Tj9fbSlnv9NukZFMkZ5UjuK2ZTNqensTdGzdVy0mwNgY9+BWnLzbk7Hz/c209ncPBcxPFKhwyOMEVFWnr80sus3CyXn2vym8tZv7yj/wDXWZXOaBSqdppKKANBJS6Z5bOASRWvZX9/ZWpjcEWsucqw4J9aztGsHukmlXny8Gu5u7OO80CP5RlR1FJQe6E2X9C8Y2gt1tNQIY5+VsHH+f8AGt43On6iPJt2SRW4ZAQRj/PavHm/cuQzYKmnJrbWR3QO3m4xuU9BVxqvZi5Sx46sGsvEkjGAQpOiyLt6N2J9jxyK5qtDVdYu9XkR7p92zO32zWfSbuygoopyI0jqiDLMcAUgLWm3stncbomxuGCOxHoa7zw9q8NzbvZTnazfdB7+1cS+hahHtKxByef3bhsflW/p2nXLqvmW8kUnXkYo5mhNXMfxAPIvpoO4f9Kxq3/EWn3ouZL24UKrYAyeTjjOBWBQMKKKKAP/2Q==",
@@ -304,7 +304,7 @@
    "number": 43353,
    "title": "fix(agent): flush trailing incomplete action/thought prefixes in ReAct stream parser",
    "status": "open",
-   "stars": 158675,
+   "stars": 158674,
    "created": "2026-10-02T10:52:57Z",
    "merged_at": null,
    "merged_date": "",
