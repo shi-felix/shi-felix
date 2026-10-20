@@ -338,18 +338,12 @@ def card_merged(prs: list[dict], C: dict, avatars: dict[str, str]) -> str:
 
 # ---------------------------------------------------------------- README
 def sync(md: str, prs: list[dict]) -> str:
-    """只同步徽章数字与一行统计小字；明细表格已按 2026-10-01 反馈移除。"""
+    """只同步徽章数字与数据来源；合并数已由卡片承载，此处不再重复。"""
     merged = [p for p in prs if p["status"] == "merged"]
-    upstream = [p for p in merged if p["owner"] != USER]
-    own = [p for p in merged if p["owner"] == USER]
     md = re.sub(r"(badge/Merged%20PRs-)\d+(-)", rf"\g<1>{len(merged)}\g<2>", md)
 
     lines = ["<!-- STATS:BEGIN -->",
-             f"**{len(merged)}** 个 PR 已被合并"
-             + (f"（{len(upstream)} 个提给他人仓库 · {len(own)} 个自有项目）" if own
-                else f"（{len(upstream)} 个提给他人仓库）")
-             + "· 数据由 "
-             "[`generate_stats.py`](./scripts/generate_stats.py) 每日直连 GitHub API 刷新",
+             "数据由 [`generate_stats.py`](./scripts/generate_stats.py) 每日直连 GitHub API 刷新",
              "<!-- STATS:END -->"]
     return re.sub(r"<!-- STATS:BEGIN -->.*?<!-- STATS:END -->", "\n".join(lines), md, flags=re.S)
 
