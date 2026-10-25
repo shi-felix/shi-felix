@@ -9,7 +9,7 @@
 
 **Agent 开发 · 后端 / 全栈** · 2028 届本科在读
 
-[![Merged PRs](https://img.shields.io/badge/Merged%20PRs-12-8250DF?style=flat-square&logo=git&logoColor=white)](https://github.com/shi-felix/shi-felix)
+[![Merged PRs](https://img.shields.io/badge/Merged%20PRs-13-8250DF?style=flat-square&logo=git&logoColor=white)](https://github.com/shi-felix/shi-felix)
 
 </div>
 
