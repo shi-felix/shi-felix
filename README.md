@@ -9,7 +9,7 @@
 </picture>
 
 <!-- STATS:BEGIN -->
-<sub>**13** 个 PR 已被合并（13 个提给他人仓库）· 数据由 [`generate_stats.py`](./scripts/generate_stats.py) 每日直连 GitHub API 刷新</sub>
+<sub>**14** 个 PR 已被合并（14 个提给他人仓库）· 数据由 [`generate_stats.py`](./scripts/generate_stats.py) 每日直连 GitHub API 刷新</sub>
 <!-- STATS:END -->
 
 ## 代表项目
