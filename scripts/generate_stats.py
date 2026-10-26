@@ -3,19 +3,20 @@
 """
 Merged PR Observatory — 静态资源生成器
 
-只统计**已合并**的 Pull Request，生成 **亮 / 暗两版** 极简 SVG 卡片
+只统计**已合并**的 Pull Request，生成 **亮 / 暗两版** 极简 SVG
 （README 用 <picture> + prefers-color-scheme 按 GitHub 主题自动切换），
 并把一行统计小字回写 README.md 的标记区间。
 
-设计原则（用户反馈驱动：2026-10-01 二次精简，2026-10-10 补 PR 计数，
-2026-10-16 加组织 Logo 与细节升级）：
-- 一个焦点数字（已合并 PR 总数）+ 一条支撑链：每个上游仓库一行 ——
-  行首为**组织 Logo**（GitHub 官方头像，base64 内嵌、不依赖外部图床），
-  随后是仓库名、该仓库已合并 PR 数、★ 星级（官方 octicon 图标）。
-  PR 标题 / 行数 / 文件数 / 合并日期一律不上卡片。
+设计原则（2026-10-26 重设计：编辑排版风）：
+- 全部 SVG 透明背景，直接融入 GitHub 页面；不用卡片底色与边框，
+  只靠发丝线、字距与单一 merged 紫（GitHub「已合并」语义色）建立秩序。
+- 主视觉 hero：mono 眉行 + 姓名 + 终端光标（SMIL 闪烁）+ 两行定位文案。
+- PR 观测卡：焦点数字（已合并 PR 总数）+ 合并时间轴（每个 PR 一枚圆点，
+  按合并日期定位，同日过密时叠泳道）+ 每上游仓库一行（组织 Logo、
+  仓库名、PR 数、★ 星级）。PR 标题 / 行数 / 合并日期一律不上卡片。
 - 排序按仓库含金量：上游仓库以 stars 降序（公开可验证、每日随数据刷新）。
 - 贡献贪吃蛇（Platane/snk）由 .github/workflows/snake.yml 独立生成，
-  输出在 output 分支，README 顶部引用。
+  输出在 output 分支，README 底部引用。
 
 用法：
     python scripts/generate_stats.py                  # 本地（走 gh CLI 鉴权）
@@ -45,19 +46,19 @@ README = ROOT / "README.md"
 TZ8 = timezone(timedelta(hours=8))
 
 # ---------------------------------------------------------------- GitHub Primer 色值
+# 2026-10-26 重设计：编辑排版风 —— SVG 透明背景融入 GitHub 页面，
+# 不再使用卡片底色/边框，只靠发丝线 + 字距 + 单一 merged 紫点缀。
 # 亮色（GitHub light default）
 LIGHT = {
-    "bg": "#FFFFFF", "border": "#D1D9E0", "hair": "#EAEEF2", "chip": "#F6F8FA",
+    "hair": "#EAEEF2",
     "text": "#1F2328", "text2": "#59636E", "text3": "#818B98",
     "accent": "#8250DF",   # GitHub 的 merged 紫
-    "add": "#1A7F37",      # GitHub 的 additions 绿
 }
 # 暗色（GitHub dark default）
 DARK = {
-    "bg": "#0D1117", "border": "#30363D", "hair": "#21262D", "chip": "#161B22",
+    "hair": "#21262D",
     "text": "#F0F6FC", "text2": "#9198A1", "text3": "#6E7681",
     "accent": "#A371F7",
-    "add": "#3FB950",
 }
 FONT = ("-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',"
         "'Hiragino Sans GB','Microsoft YaHei',sans-serif")
@@ -239,13 +240,40 @@ def tx(x, y, s, size=12, fill="#000", weight="normal", anchor="start",
             f'font-size="{size}" fill="{fill}" font-weight="{weight}"{a}{l}>{esc(s)}</text>')
 
 
-# ---------------------------------------------------------------- 卡片（极简）
+# ---------------------------------------------------------------- 主视觉
+def card_hero(C: dict) -> str:
+    """962×240 透明背景：mono 眉行 + 姓名 + 终端光标（SMIL 闪烁）+ 定位文案。"""
+    W, L = 962, 40
+    caret_x = 367  # 光标紧跟「石敬荣 · Felix Shi」（Edge/Segoe 实测文字右缘 356.5，留 10px）
+    b = [
+        f'<rect x="{L}" y="47" width="7" height="7" fill="{C["accent"]}"/>',
+        tx(L + 16, 54, "AGENT DEVELOPER · BACKEND / FULLSTACK", 11.5,
+           C["accent"], "600", family=MONO, ls="2.6"),
+        f'<text x="{L - 2}" y="128" font-family="{FONT}" font-size="44" '
+        f'font-weight="700" fill="{C["text"]}">石敬荣'
+        f'<tspan fill="{C["text2"]}" font-weight="400"> · Felix Shi</tspan></text>',
+        # 终端光标：GitHub 的 <img> SVG 支持 SMIL 动画
+        f'<rect x="{caret_x}" y="98" width="13" height="36" rx="2" fill="{C["accent"]}">'
+        '<animate attributeName="opacity" values="1;1;0;0;1" '
+        'keyTimes="0;0.45;0.55;0.95;1" dur="1.1s" repeatCount="indefinite"/></rect>',
+        tx(L, 172, "构建 Coding Agent，也持续向 deer-flow、dspy、dify 等一线 AI 开源仓库贡献代码。",
+           15.5, C["text2"]),
+        tx(L, 202, "2028 届本科在读 · 专注 Agent Harness / MCP / 多智能体系统", 13, C["text3"]),
+    ]
+    return "\n".join([
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="240" '
+        f'viewBox="0 0 {W} 240" role="img" aria-label="石敬荣 · Felix Shi">',
+        '<title>石敬荣 · Felix Shi — Agent 开发 · 后端 / 全栈</title>',
+        *b, "</svg>"]) + "\n"
+
+
+# ---------------------------------------------------------------- PR 观测卡
 def card_merged(prs: list[dict], C: dict, avatars: dict[str, str]) -> str:
-    """962 宽、高度自适应：焦点数字 + 每上游仓库一行（Logo + 仓库名 + PR 数 + ★）。"""
+    """962 宽、透明背景：眉行 + 焦点数字 + 合并时间轴 + 仓库行 + 页脚。"""
     W = 962
     L, R = 40, W - 40
-    PRC = R - 152          # PR 计数列的右基线（与最右的 ★ 列留出固定间距）
-    SZ, RX = 30, 8         # 行首 Logo 的尺寸与圆角
+    PRC = R - 150          # PR 计数列的右基线（与最右的 ★ 列留出固定间距）
+    SZ, RX = 32, 8         # 行首 Logo 的尺寸与圆角
     NX = L + SZ + 16       # 仓库名起始 x（与 Logo 留 16px 间距）
 
     merged = [p for p in prs if p["status"] == "merged"]
@@ -265,27 +293,69 @@ def card_merged(prs: list[dict], C: dict, avatars: dict[str, str]) -> str:
 
     b: list[str] = []
     defs: list[str] = []
-    # 眉头
-    b.append(f'<circle cx="{L + 4}" cy="50" r="3.2" fill="{C["accent"]}"/>')
-    b.append(tx(L + 16, 54, "MERGED PULL REQUESTS", 12, C["accent"], "700", ls="2.4"))
-    b.append(tx(R, 54, f"github.com/{USER}", 12, C["text2"], "normal", "end", MONO))
+
+    # 眉行
+    b.append(f'<rect x="{L}" y="47" width="7" height="7" fill="{C["accent"]}"/>')
+    b.append(tx(L + 16, 54, "MERGED PULL REQUESTS", 11.5, C["accent"], "600",
+                family=MONO, ls="2.6"))
+    b.append(tx(R, 54, f"github.com/{USER}", 12, C["text3"], "normal", "end", MONO))
+    b.append(f'<line x1="{L}" y1="74" x2="{R}" y2="74" stroke="{C["hair"]}"/>')
 
     # 焦点数字
     n = str(len(merged))
-    b.append(tx(L - 5, 146, n, 84, C["text"], "700", family=MONO, ls="-3.5"))
-    b.append(tx(L + 52 * len(n) + 16, 146, "个 PR 已合并", 20, C["text"], "600", ls="-0.2"))
+    b.append(tx(L - 4, 162, n, 76, C["text"], "700", family=MONO, ls="-3"))
+    b.append(tx(L - 4 + 46 * len(n) + 14, 160, "个 PR 已合并", 18, C["text"], "600"))
+    recent = sum(1 for p in merged
+                 if (t := parse_ts(p["merged_at"]))
+                 and t >= datetime.now(timezone.utc) - timedelta(days=30))
     sub = f"{len(upstream)} 个提给他人仓库"
     if own:
         sub += f" · {len(own)} 个自有项目"
-    b.append(tx(L, 174, sub, 14.5, C["text2"], "500"))
-    b.append(f'<line x1="{L}" y1="202" x2="{R}" y2="202" stroke="{C["hair"]}"/>')
+    if recent:
+        sub += f" · 近 30 天 +{recent}"
+    b.append(tx(L, 194, sub, 14, C["text2"], "500"))
 
-    # 仓库行：组织 Logo + 仓库名 + 该仓库已合并 PR 数 + 星级（列表主体）
-    y = 242
+    # 合并时间轴：每个已合并 PR 一枚圆点，按合并时间定位；同日过密叠泳道
+    stamps = sorted(t for t in (parse_ts(p["merged_at"]) for p in merged) if t)
+    ty = 238
+    if stamps:
+        t0, t1 = stamps[0], stamps[-1]
+        span = max((t1 - t0).total_seconds(), 86400.0)
+        x0, x1 = L + 6, R - 6
+
+        def pos(t, _t0=t0, _s=span):
+            return x0 + (t - _t0).total_seconds() / _s * (x1 - x0)
+
+        lanes: list[float] = []
+        for t in stamps:
+            x = pos(t)
+            lane = next((i for i, lx in enumerate(lanes) if x - lx >= 14), None)
+            if lane is None:
+                lane = len(lanes)
+                if lane > 2:
+                    lane = 2      # 极端同日密集时压到第 3 条泳道
+                else:
+                    lanes.append(0.0)
+            lanes[lane] = x
+            b.append(f'<circle cx="{x:.1f}" cy="{ty - 8 - lane * 11}" r="3.6" '
+                     f'fill="{C["accent"]}"/>')
+        b.append(f'<line x1="{L}" y1="{ty}" x2="{R}" y2="{ty}" stroke="{C["hair"]}"/>')
+        b.append(tx(L, ty + 24, t0.astimezone(TZ8).strftime("%m-%d"), 11,
+                    C["text3"], family=MONO))
+        b.append(tx(R, ty + 24, t1.astimezone(TZ8).strftime("%m-%d"), 11,
+                    C["text3"], "normal", "end", MONO))
+
+    b.append(f'<line x1="{L}" y1="288" x2="{R}" y2="288" stroke="{C["hair"]}"/>')
+
+    # 仓库行：组织 Logo + 仓库名 + 该仓库已合并 PR 数 + 星级；行间发丝线
+    y = 336
     for i, (repo, items) in enumerate(shown):
+        if i:
+            b.append(f'<line x1="{NX}" y1="{y - 27}" x2="{R}" y2="{y - 27}" '
+                     f'stroke="{C["hair"]}"/>')
         stars = max(p.get("stars") or 0 for p in items)
         owner = repo.split("/")[0]
-        ly = round(y - SZ / 2 - 6.3, 1)       # Logo 顶边：与文字光学居中对齐
+        ly = round(y - SZ / 2 - 7, 1)       # Logo 顶边：与文字光学居中对齐
         av = avatars.get(owner)
         if av:
             defs.append(f'<clipPath id="lg{i}"><rect x="{L}" y="{ly}" '
@@ -296,54 +366,52 @@ def card_merged(prs: list[dict], C: dict, avatars: dict[str, str]) -> str:
                      f'href="{av}" clip-path="url(#lg{i})" '
                      f'preserveAspectRatio="xMidYMid slice"/>')
             b.append(f'<rect x="{L}" y="{ly}" width="{SZ}" height="{SZ}" '
-                     f'rx="{RX}" fill="none" stroke="{C["border"]}"/>')
+                     f'rx="{RX}" fill="none" stroke="{C["hair"]}"/>')
         else:
             b.append(f'<rect x="{L}" y="{ly}" width="{SZ}" height="{SZ}" '
-                     f'rx="{RX}" fill="{C["chip"]}" stroke="{C["border"]}"/>')
+                     f'rx="{RX}" fill="{C["hair"]}"/>')
             b.append(tx(L + SZ / 2, round(ly + SZ / 2 + 5.3, 1), owner[0].upper(),
                         15, C["text2"], "700", "middle"))
-        b.append(tx(NX, y, repo, 18, C["text"], "700", family=MONO, ls="0.2"))
-        b.append(tx(PRC, y, f"{len(items)} 个 PR", 15.5, C["text"], "700", "end"))
+        b.append(tx(NX, y, repo, 16.5, C["text"], "600", family=MONO, ls="0.2"))
+        b.append(tx(PRC, y, f"{len(items)} 个 PR", 14.5, C["text"], "600", "end"))
         star = fmt_stars(stars)
-        sx = R - len(star) * 0.58 * 16 - 6 - 15   # 星标图标放计数左侧（按最宽等宽字宽估算）
-        b.append(f'<g transform="translate({sx:.1f} {y - 13}) scale(0.9375)" '
+        sx = R - len(star) * 8.4 - 20       # 星标图标放计数左侧（mono 字宽估算）
+        b.append(f'<g transform="translate({sx:.1f} {y - 12.5}) scale(0.875)" '
                  f'fill="{C["text2"]}"><path d="{STAR16}"/></g>')
-        b.append(tx(R, y, star, 16, C["text2"], "600", "end", MONO))
-        y += 46
+        b.append(tx(R, y, star, 14, C["text2"], "600", "end", MONO))
+        y += 54
     if rest > 0:
-        b.append(tx(NX, y, f"… 另有 {rest} 个仓库已合并 PR", 15, C["text3"], "500"))
-        y += 46
+        if shown:
+            b.append(f'<line x1="{NX}" y1="{y - 27}" x2="{R}" y2="{y - 27}" '
+                     f'stroke="{C["hair"]}"/>')
+        b.append(tx(NX, y, f"… 另有 {rest} 个仓库已合并 PR", 13.5, C["text3"], "500"))
+        y += 54
 
-    H = int(y + 26 + 44)
+    fy = y - 10
+    H = fy + 46
     stamp = datetime.now(TZ8).strftime("%Y-%m-%d %H:%M (UTC+8)")
 
     head = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" '
             f'viewBox="0 0 {W} {H}" role="img" aria-label="已合并的 Pull Request">',
             f'<title>已合并的 Pull Request · github.com/{USER}</title>',
-            '<defs>',
-            f'<clipPath id="card"><rect x="0.5" y="0.5" width="{W - 1}" '
-            f'height="{H - 1}" rx="12"/></clipPath>',
-            *defs,
-            '</defs>',
-            f'<rect x="0.5" y="0.5" width="{W - 1}" height="{H - 1}" rx="12" '
-            f'fill="{C["bg"]}" stroke="{C["border"]}"/>',
-            f'<rect x="0" y="0" width="{W}" height="3" rx="1.5" fill="{C["accent"]}" '
-            f'fill-opacity="0.9" clip-path="url(#card)"/>']
-    tail = [f'<line x1="{L}" y1="{H - 44}" x2="{R}" y2="{H - 44}" stroke="{C["hair"]}"/>',
-            tx(L, H - 20, "数据来源 GitHub REST API · 每日自动刷新", 13, C["text2"]),
-            tx(R, H - 20, f"更新于 {stamp}", 13, C["text2"], "normal", "end", MONO),
+            '<defs>', *defs, '</defs>']
+    tail = [f'<line x1="{L}" y1="{fy}" x2="{R}" y2="{fy}" stroke="{C["hair"]}"/>',
+            tx(L, fy + 28, "数据来源 GitHub REST API · 每日自动刷新", 12, C["text3"]),
+            tx(R, fy + 28, f"更新于 {stamp}", 12, C["text3"], "normal", "end", MONO),
             '</svg>']
     return "\n".join(head + b + tail) + "\n"
 
 
 # ---------------------------------------------------------------- README
 def sync(md: str, prs: list[dict]) -> str:
-    """只同步徽章数字与数据来源；合并数已由卡片承载，此处不再重复。"""
+    """回写 STATS 标记区间的一行小字（shields 徽章已随 2026-10-26 重设计移除）。"""
     merged = [p for p in prs if p["status"] == "merged"]
-    md = re.sub(r"(badge/Merged%20PRs-)\d+(-)", rf"\g<1>{len(merged)}\g<2>", md)
-
+    upstream = [p for p in merged if p["owner"] != USER]
+    own = [p for p in merged if p["owner"] == USER]
+    detail = f"{len(upstream)} 个提给他人仓库" + (f" · {len(own)} 个自有项目" if own else "")
     lines = ["<!-- STATS:BEGIN -->",
-             "数据由 [`generate_stats.py`](./scripts/generate_stats.py) 每日直连 GitHub API 刷新",
+             f"<sub>**{len(merged)}** 个 PR 已被合并（{detail}）· 数据由 "
+             "[`generate_stats.py`](./scripts/generate_stats.py) 每日直连 GitHub API 刷新</sub>",
              "<!-- STATS:END -->"]
     return re.sub(r"<!-- STATS:BEGIN -->.*?<!-- STATS:END -->", "\n".join(lines), md, flags=re.S)
 
@@ -357,13 +425,14 @@ def main() -> int:
     print(f"  共 {len(prs)} 个 PR，其中已合并 {len(merged)} 个；组织 Logo {len(avatars)} 枚")
 
     for name, palette in (("light", LIGHT), ("dark", DARK)):
+        (ASSETS / f"hero-{name}.svg").write_text(card_hero(palette), encoding="utf-8")
         (ASSETS / f"merged-prs-{name}.svg").write_text(
             card_merged(prs, palette, avatars), encoding="utf-8")
-        print(f"  assets/merged-prs-{name}.svg")
+        print(f"  assets/hero-{name}.svg + merged-prs-{name}.svg")
 
     if README.exists():
         README.write_text(sync(README.read_text(encoding="utf-8"), prs), encoding="utf-8")
-        print("  README.md 统计区间 / 徽章已更新")
+        print("  README.md 统计区间已更新")
 
     if "--offline" not in sys.argv:
         (ASSETS / "stats.json").write_text(
