@@ -12,43 +12,45 @@
 <text x="56" y="54" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="11.5" fill="#A371F7" font-weight="600" letter-spacing="2.6">MERGED PULL REQUESTS</text>
 <text x="922" y="54" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="12" fill="#6E7681" font-weight="normal" text-anchor="end">github.com/shi-felix</text>
 <line x1="40" y1="74" x2="922" y2="74" stroke="#21262D"/>
-<text x="36" y="162" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="76" fill="#F0F6FC" font-weight="700" letter-spacing="-3">35</text>
+<text x="36" y="162" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="76" fill="#F0F6FC" font-weight="700" letter-spacing="-3">37</text>
 <text x="142" y="160" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif" font-size="18" fill="#F0F6FC" font-weight="600">个 PR 已合并</text>
-<text x="40" y="194" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif" font-size="14" fill="#9198A1" font-weight="500">35 个提给他人仓库 · 近 30 天 +31</text>
+<text x="40" y="194" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif" font-size="14" fill="#9198A1" font-weight="500">37 个提给他人仓库 · 近 30 天 +33</text>
 <circle cx="46.0" cy="230" r="3.6" fill="#A371F7"/>
 <circle cx="46.0" cy="219" r="3.6" fill="#A371F7"/>
 <circle cx="46.0" cy="208" r="3.6" fill="#A371F7"/>
 <circle cx="46.0" cy="208" r="3.6" fill="#A371F7"/>
-<circle cx="312.2" cy="230" r="3.6" fill="#A371F7"/>
-<circle cx="447.1" cy="230" r="3.6" fill="#A371F7"/>
-<circle cx="500.9" cy="230" r="3.6" fill="#A371F7"/>
-<circle cx="551.6" cy="230" r="3.6" fill="#A371F7"/>
-<circle cx="566.5" cy="230" r="3.6" fill="#A371F7"/>
-<circle cx="582.2" cy="230" r="3.6" fill="#A371F7"/>
-<circle cx="602.4" cy="230" r="3.6" fill="#A371F7"/>
-<circle cx="616.3" cy="219" r="3.6" fill="#A371F7"/>
-<circle cx="812.2" cy="230" r="3.6" fill="#A371F7"/>
-<circle cx="833.2" cy="230" r="3.6" fill="#A371F7"/>
-<circle cx="839.6" cy="219" r="3.6" fill="#A371F7"/>
+<circle cx="310.8" cy="230" r="3.6" fill="#A371F7"/>
+<circle cx="445.0" cy="230" r="3.6" fill="#A371F7"/>
+<circle cx="498.6" cy="230" r="3.6" fill="#A371F7"/>
+<circle cx="549.0" cy="230" r="3.6" fill="#A371F7"/>
+<circle cx="563.9" cy="230" r="3.6" fill="#A371F7"/>
+<circle cx="579.6" cy="230" r="3.6" fill="#A371F7"/>
+<circle cx="599.6" cy="230" r="3.6" fill="#A371F7"/>
+<circle cx="613.4" cy="219" r="3.6" fill="#A371F7"/>
+<circle cx="808.4" cy="230" r="3.6" fill="#A371F7"/>
+<circle cx="829.3" cy="230" r="3.6" fill="#A371F7"/>
+<circle cx="835.6" cy="219" r="3.6" fill="#A371F7"/>
+<circle cx="836.6" cy="208" r="3.6" fill="#A371F7"/>
 <circle cx="840.6" cy="208" r="3.6" fill="#A371F7"/>
-<circle cx="844.6" cy="208" r="3.6" fill="#A371F7"/>
-<circle cx="844.6" cy="208" r="3.6" fill="#A371F7"/>
-<circle cx="844.6" cy="208" r="3.6" fill="#A371F7"/>
-<circle cx="844.9" cy="208" r="3.6" fill="#A371F7"/>
-<circle cx="845.3" cy="208" r="3.6" fill="#A371F7"/>
-<circle cx="864.9" cy="230" r="3.6" fill="#A371F7"/>
-<circle cx="895.5" cy="230" r="3.6" fill="#A371F7"/>
-<circle cx="895.6" cy="219" r="3.6" fill="#A371F7"/>
-<circle cx="896.3" cy="208" r="3.6" fill="#A371F7"/>
-<circle cx="903.5" cy="208" r="3.6" fill="#A371F7"/>
-<circle cx="904.7" cy="208" r="3.6" fill="#A371F7"/>
-<circle cx="915.5" cy="230" r="3.6" fill="#A371F7"/>
-<circle cx="915.5" cy="219" r="3.6" fill="#A371F7"/>
-<circle cx="915.5" cy="208" r="3.6" fill="#A371F7"/>
-<circle cx="915.5" cy="208" r="3.6" fill="#A371F7"/>
-<circle cx="915.5" cy="208" r="3.6" fill="#A371F7"/>
-<circle cx="915.7" cy="208" r="3.6" fill="#A371F7"/>
-<circle cx="915.9" cy="208" r="3.6" fill="#A371F7"/>
+<circle cx="840.6" cy="208" r="3.6" fill="#A371F7"/>
+<circle cx="840.6" cy="208" r="3.6" fill="#A371F7"/>
+<circle cx="840.8" cy="208" r="3.6" fill="#A371F7"/>
+<circle cx="841.3" cy="208" r="3.6" fill="#A371F7"/>
+<circle cx="860.8" cy="230" r="3.6" fill="#A371F7"/>
+<circle cx="891.2" cy="230" r="3.6" fill="#A371F7"/>
+<circle cx="891.3" cy="219" r="3.6" fill="#A371F7"/>
+<circle cx="892.0" cy="208" r="3.6" fill="#A371F7"/>
+<circle cx="899.2" cy="208" r="3.6" fill="#A371F7"/>
+<circle cx="900.4" cy="208" r="3.6" fill="#A371F7"/>
+<circle cx="911.1" cy="230" r="3.6" fill="#A371F7"/>
+<circle cx="911.1" cy="219" r="3.6" fill="#A371F7"/>
+<circle cx="911.1" cy="208" r="3.6" fill="#A371F7"/>
+<circle cx="911.1" cy="208" r="3.6" fill="#A371F7"/>
+<circle cx="911.2" cy="208" r="3.6" fill="#A371F7"/>
+<circle cx="911.4" cy="208" r="3.6" fill="#A371F7"/>
+<circle cx="911.5" cy="208" r="3.6" fill="#A371F7"/>
+<circle cx="911.6" cy="208" r="3.6" fill="#A371F7"/>
+<circle cx="914.3" cy="208" r="3.6" fill="#A371F7"/>
 <circle cx="916.0" cy="208" r="3.6" fill="#A371F7"/>
 <line x1="40" y1="238" x2="922" y2="238" stroke="#21262D"/>
 <text x="40" y="262" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="11" fill="#6E7681" font-weight="normal">09-18</text>
@@ -58,9 +60,9 @@
 <image x="40" y="313.0" width="32" height="32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAIAAAAlC+aJAAAEeElEQVR4nOxZXUhk5R9+xvHjuP6X+Y8TMsqEBuO4XuQiA5qo+IFfyECjraZiaCDUlZsQdScNEkR5oxdChRe5EBrujDrpjS5INdg2hpKOjlOTQYsihU6mNprOifPxm1VXbWec3VZ4n9/Lnt/7PL89nuec90uM5nkeVxlRlDADzAAzwAwwA8wAM8AMMAPMADPADDADzAAzcLUMRFNyGtvb23l5edSTwXGcTqczGAyVlZUlJSVKpZKUE3D/gtvd8P2Jd1tRW0IswfsA3Xfw7QIODmXm7oe4kSbnIQd/Dra2tqjkbBgMBpvNRuUncOsdHkahJZYQRbj3HX8tX1aDbX6F5NARjYsfUwy9Xh8TEwNgb29vY2PD7/cD8Hg8NTU1Fouls7OTCmUc/H06keKvfbzWiT0//n8dyc8RC8TFUhYGyMlFX8Dr9RLN7+/v2+32rKwsEjExMSFrFPcX+cxbfHIl/+nJLzR5X37lb7xP1KUBSh7XgBQ7Ozu5ubmCBmRmZh4dHZFyEe6MR97AYw2hRyMhIaGvr89oNAJYXl6enZ3NupnzwWckE7Iz8HIRvl+G/Wuh+8OPMj+7jPc+kXMAb76Cr+59sbS0BKC8vDw/P58UzM3NjY6OAkhLS2ttbSX6GMhJaF9ACr1eL8hAb2/v1vbpqQkj/7pFKPv47hnS8Ta/wvf09Ag3AsxmM91eiLa2NoEFLBbLQ/ZYXGofyM7OFq/ChCYuTNTW1kqL8uTkpLRIAAgEAuPj42KKxsZGqo3cRpaUlCRtZD6f73oCPDa59bxNFWK8WiHzH92WmQZipH9vpEGn0xUWFgLY3d2dmpoSq+B0OtfX1wEYjcb09HT5P5+MMOeA1A4P5a1IqVQqo5D+vCzMH1siAaj+JzQAWs1DJlgcjKampunpaQA2m81kMklJUKKqiH6B1dVV8Yrk5GTiwkd9fX1cXByAkZER6dUMDw8LgyQq6okYODg4cDqdwZWU6PChUqmqqqoAbG5uOhwOl8vl9XoBVFRUaLVaqoqcgcHBQWmlUigUpaWlRF8KdXV14hVfioCIlpYW0iM3BxwOR3t7e/Cn6nQ6Ui4Fs9nMcZzf7x8bG9NohBmjVqvNZjPp4RpYWFiQXnYgEFhZWbHb7VarVRqmiYmJ3d3dAH76FX/syPU/P5CT333CLhbE6pqc/LZ1gs98Adc4eX+srq62Wq0ej0ehUEjLK8dxVHhGKM77I5/P51Or1dQ7G1qt1mq1Sqdu01sY/4aEEDH/OW4a5HxoaKihoUHuiNtCWVkZ9SI3B1QqVUdHh8vlevR3hkvCZDLFx8eLKVJSUoqLi0kJcQhxHNfV1UU9GRzHaTSajIwMo9EoLXlBNFfjpRepEyKC+4M0ilJTU91ut3DP5ubo6H8b5HSm+O+xuLg4MzNjsVjo0eB2u0kM/Tj99BE8n595qjsvwt8HniiKior6+/uph3BWoacfAwMDa2trsbGxOTk5BQUFRF8dA+Eh6pl+OmaAGWAGmAFmgBlgBpgBZoAZYAaYAWbgGTbwzwDLIcm0j6gAVwAAAABJRU5ErkJggg==" clip-path="url(#lg0)" preserveAspectRatio="xMidYMid slice"/>
 <rect x="40" y="313.0" width="32" height="32" rx="8" fill="none" stroke="#21262D"/>
 <text x="88" y="336" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="16.5" fill="#F0F6FC" font-weight="600" letter-spacing="0.2">langgenius/dify</text>
-<text x="772" y="336" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif" font-size="14.5" fill="#F0F6FC" font-weight="600" text-anchor="end">18 个 PR</text>
-<g transform="translate(851.6 323.5) scale(0.875)" fill="#9198A1"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Zm0 2.445L6.615 5.5a.75.75 0 0 1-.564.41l-3.097.45 2.24 2.184a.75.75 0 0 1 .216.664l-.528 3.084 2.769-1.456a.75.75 0 0 1 .698 0l2.77 1.456-.53-3.084a.75.75 0 0 1 .216-.664l2.24-2.183-3.096-.45a.75.75 0 0 1-.564-.41L8 2.694Z"/></g>
-<text x="922" y="336" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="14" fill="#9198A1" font-weight="600" text-anchor="end">159.9k</text>
+<text x="772" y="336" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif" font-size="14.5" fill="#F0F6FC" font-weight="600" text-anchor="end">19 个 PR</text>
+<g transform="translate(868.4 323.5) scale(0.875)" fill="#9198A1"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Zm0 2.445L6.615 5.5a.75.75 0 0 1-.564.41l-3.097.45 2.24 2.184a.75.75 0 0 1 .216.664l-.528 3.084 2.769-1.456a.75.75 0 0 1 .698 0l2.77 1.456-.53-3.084a.75.75 0 0 1 .216-.664l2.24-2.183-3.096-.45a.75.75 0 0 1-.564-.41L8 2.694Z"/></g>
+<text x="922" y="336" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="14" fill="#9198A1" font-weight="600" text-anchor="end">160k</text>
 <line x1="88" y1="363" x2="922" y2="363" stroke="#21262D"/>
 <rect x="40" y="367.0" width="32" height="32" rx="8" fill="#FFFFFF"/>
 <image x="40" y="367.0" width="32" height="32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAADPklEQVR4nOzbX0hTbRwH8J8v+jpez3b2rrPZ3BHNuU1OkmI6XFauwIi6NYi6MLrqz1V0J3TRdYU3pV0GQlgIRX92sdI2GkumlWRMxUHaWjFX286TmtukxZE9IrNQMnU95/k+HHj+3fhhPtt5znPy0+k0yDn/4AoFoAAUgAL87QBBJFaMRz8LuL2W5JH0LeANBdu8oeAtAJjWM8yTEkbpLmGULouGm8Bz5AKQnUk9w7h2sP87yln14xJGObfiX6Cz59WZ4bEwj9uEpfzTzMwpbyh497Z/JHbV5/XggXxc6XWOd/U6x28AwJvm+tI+wcj1C0bOs7OSQ3gOIfkXAJpWAGSK9ImodQ8FpesiACwAwGBzfekzwci5Gqr1z8sN7PzSbBl8C0hANvdQsL3rzmvn6UuOiGvwfQUelANAdhgAUOCGHAGICwWgABSAAlAACkAB5AuQ//Pu3CyhmVn1yJdYi3SPcriMv4f7iQWIzicKAiJq8IUj9oCIDkQTyf3S3ZxVx3UCAHkAKJnMG4uJdb5w5GBARM2ZP1iJxzciOQVwfWS0eywmnsRtOS6CRbgiVwCgAJsM8MfWgI7etx1oNlmw28I5zDzrMfMskhUAABj8U/Fj/qn4eQBISnuJjYLObeJV/TZB59mmUiTwRFIBlmdx53XAP9004J9u73YGEhpV4Yt6M/dw367tPWae/YgnkgqQncIoStidQyE7mkspza3sZTxAF8EtXgQpAAWgABSAAlAACkABKAAFoAAUgAJsNYCh6D/p+FoYt0naD1hT2qpM16TLF44IARHZfeFIS+bZgAbPIRoAF2ux1i9dJ8zGzuh8Ii8gohoJYzQmHvmaSu3F84gFWF40isK0VaEdthZrhwHgSiCOVACgx+PEA2SXSrVK2m1GW7UIxgFgFjdIyGqfAOmo7MvM2WEij8pmA3zfwMPSE0KZ+sHRxtIe3JFTAK2HLGf31Boe1VYVf8B968ykiVe5zDzbb+LZPpugy5VnAYsPbVYAnDtedxPXfzPfeG3R/RqjxmHi2ac2QfcOD+RAfvnCxBLAesuF1uo2XM+ByPOVGemlqbmFlMKi4fy4b7UQBbAZvwMoAAWgAGQB/BgAFdIczCslEDsAAAAASUVORK5CYII=" clip-path="url(#lg1)" preserveAspectRatio="xMidYMid slice"/>
@@ -90,7 +92,7 @@
 <image x="40" y="529.0" width="32" height="32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAADc0lEQVR4nOyZTUtbTRTHT3ITDI/Po/AUbpqmabLSjXURUFI3FpeSrUvFjZ9BBEEE6dqtCC6K4KYuFNxJfFnoNxAFlbReI5U0IIakJoYpE+aUjJ3otde8THL+h0Nm5pwjmd+c+6K6oc1FAAgAASAABIAAEAACQAAIAAEgAK0GwNbePDjQUD4AePfAwwAQEWM/APyLyToC+L/KxtDNJ065gINmBGAAQEBsip9aSHziZsN2Tu8lrBYAPGJzb8XG+GdQeEj4awDwYkEj9TcA/hMnVNmOeGp8/EaccMvZJwBIAwDTxO/wizt+VAjjrfzq96xFzP38EgJAAAhAEwEwTRM6Ojpw2l4ADMOAtbU1RwCeY58Vj5qG+sLCAuPq6upSxe9q9SIk2cjICASDwQeral1aFiR2dv6oj0Qij9afn5/D7u4uTssWj8dhZmYGp43rgK2tLWZHxWKRDQ0NSbWxWIwVCgVMUSqfz7P+/n6pLhQKsXQ6jSmOOqBuAKanp6U6/qVPT08xXFVTU1NSndfrZQcHBxjWA8DGxgZzuVxS3fr6FwxX1crKilTDx4uLixjWA8DR0RHr7u6WamZnZzFcVYeHh8zn80l1ExMTGLYD4Ba/eMMA3NzcsJ6eHik/Ho+zUqmEKUpdXV2xQCAg1UWj0fL9QCsAY2NjUm44HGaZTAbDSvGb5cfhYamOd9DZ2Rmm6AFgaWlJyjMMg+3t7WG4qubn56U6Pl5dXcWwHgD4dd/Z2al8aXnM9vf3mcfjkeomJycxrAcA3uK9vb1SDr8Unrruk8kk8/v9Ut3g4CDL5XKY0vwA+CZHR0el+Pu+PpbNZjFFKX5z4ze5yjrTNJllWZiiBwD+bl4Z43fnk5MTDNt+2XG73Wx7exvDNQXg+HcBtEQiAXNzczgtWywWg83NTZwqZVkWLC8v47Rs0WgUjo+Py45rj6lQsPUvgNp1QCqVKresKt5Av63L3wPu7+9hfHwcrq+vcallpeyAgYEBplrXpQMcA2hir88loLvaHoDnhX9evfUTAC7501R8Xgjna98wSWcAGbGRrwCQFGN0vvYdE3XsgBIApMRGKjeWrFjLYnKtVEsAecXm8CQvRNsWMblRcgLgR5VTQ3fcnvUwFw5s6AMA/CNOjp9gDgMkjUUvQu3+IkQACAABIAAEgAAQAALQtgB+DQA5SS3YicYOmgAAAABJRU5ErkJggg==" clip-path="url(#lg4)" preserveAspectRatio="xMidYMid slice"/>
 <rect x="40" y="529.0" width="32" height="32" rx="8" fill="none" stroke="#21262D"/>
 <text x="88" y="552" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="16.5" fill="#F0F6FC" font-weight="600" letter-spacing="0.2">zauberzeug/nicegui</text>
-<text x="772" y="552" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif" font-size="14.5" fill="#F0F6FC" font-weight="600" text-anchor="end">1 个 PR</text>
+<text x="772" y="552" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif" font-size="14.5" fill="#F0F6FC" font-weight="600" text-anchor="end">2 个 PR</text>
 <g transform="translate(860.0 539.5) scale(0.875)" fill="#9198A1"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Zm0 2.445L6.615 5.5a.75.75 0 0 1-.564.41l-3.097.45 2.24 2.184a.75.75 0 0 1 .216.664l-.528 3.084 2.769-1.456a.75.75 0 0 1 .698 0l2.77 1.456-.53-3.084a.75.75 0 0 1 .216-.664l2.24-2.183-3.096-.45a.75.75 0 0 1-.564-.41L8 2.694Z"/></g>
 <text x="922" y="552" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="14" fill="#9198A1" font-weight="600" text-anchor="end">16.3k</text>
 <line x1="88" y1="579" x2="922" y2="579" stroke="#21262D"/>
@@ -105,5 +107,5 @@
 <text x="88" y="660" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif" font-size="13.5" fill="#6E7681" font-weight="500">… 另有 1 个仓库已合并 PR</text>
 <line x1="40" y1="704" x2="922" y2="704" stroke="#21262D"/>
 <text x="40" y="732" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif" font-size="12" fill="#6E7681" font-weight="normal">数据来源 GitHub REST API · 每日自动刷新</text>
-<text x="922" y="732" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="12" fill="#6E7681" font-weight="normal" text-anchor="end">更新于 2026-10-30 11:25 (UTC+8)</text>
+<text x="922" y="732" font-family="ui-monospace,'SF Mono',Menlo,Consolas,monospace" font-size="12" fill="#6E7681" font-weight="normal" text-anchor="end">更新于 2026-10-30 17:58 (UTC+8)</text>
 </svg>
