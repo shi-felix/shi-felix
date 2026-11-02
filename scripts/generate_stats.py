@@ -308,47 +308,21 @@ def card_merged(prs: list[dict], C: dict, avatars: dict[str, str]) -> str:
     recent = sum(1 for p in merged
                  if (t := parse_ts(p["merged_at"]))
                  and t >= datetime.now(timezone.utc) - timedelta(days=30))
-    sub = f"{len(upstream)} 个提给他人仓库"
+    parts = [f"分布在 {len(groups)} 个上游仓库"]
     if own:
-        sub += f" · {len(own)} 个自有项目"
+        parts.append(f"{len(own)} 个自有项目")
     if recent:
-        sub += f" · 近 30 天 +{recent}"
-    b.append(tx(L, 194, sub, 14, C["text2"], "500"))
+        parts.append(f"近 30 天 +{recent}")
+    b.append(tx(L, 194, " · ".join(parts), 14, C["text2"], "500"))
 
-    # 合并时间轴：每个已合并 PR 一枚圆点，按合并时间定位；同日过密叠泳道
-    stamps = sorted(t for t in (parse_ts(p["merged_at"]) for p in merged) if t)
-    ty = 238
-    if stamps:
-        t0, t1 = stamps[0], stamps[-1]
-        span = max((t1 - t0).total_seconds(), 86400.0)
-        x0, x1 = L + 6, R - 6
-
-        def pos(t, _t0=t0, _s=span):
-            return x0 + (t - _t0).total_seconds() / _s * (x1 - x0)
-
-        lanes: list[float] = []
-        for t in stamps:
-            x = pos(t)
-            lane = next((i for i, lx in enumerate(lanes) if x - lx >= 14), None)
-            if lane is None:
-                lane = len(lanes)
-                if lane > 2:
-                    lane = 2      # 极端同日密集时压到第 3 条泳道
-                else:
-                    lanes.append(0.0)
-            lanes[lane] = x
-            b.append(f'<circle cx="{x:.1f}" cy="{ty - 8 - lane * 11}" r="3.6" '
-                     f'fill="{C["accent"]}"/>')
-        b.append(f'<line x1="{L}" y1="{ty}" x2="{R}" y2="{ty}" stroke="{C["hair"]}"/>')
-        b.append(tx(L, ty + 24, t0.astimezone(TZ8).strftime("%m-%d"), 11,
-                    C["text3"], family=MONO))
-        b.append(tx(R, ty + 24, t1.astimezone(TZ8).strftime("%m-%d"), 11,
-                    C["text3"], "normal", "end", MONO))
-
-    b.append(f'<line x1="{L}" y1="288" x2="{R}" y2="288" stroke="{C["hair"]}"/>')
+    # 2026-11-02：合并时间轴已移除。37 个 PR 的合并日期里约 300px 是纯空白，
+    # 点全挤在最近一个月，只能传达「最近才密集」——而副标题里的「近 30 天 +N」
+    # 已经说了这件事。按「装饰不是信号」原则删掉。（原实现见 git 历史）
+    SEP = 214
+    b.append(f'<line x1="{L}" y1="{SEP}" x2="{R}" y2="{SEP}" stroke="{C["hair"]}"/>')
 
     # 仓库行：组织 Logo + 仓库名 + 该仓库已合并 PR 数 + 星级；行间发丝线
-    y = 336
+    y = SEP + 48
     for i, (repo, items) in enumerate(shown):
         if i:
             b.append(f'<line x1="{NX}" y1="{y - 27}" x2="{R}" y2="{y - 27}" '
@@ -408,9 +382,12 @@ def sync(md: str, prs: list[dict]) -> str:
     merged = [p for p in prs if p["status"] == "merged"]
     upstream = [p for p in merged if p["owner"] != USER]
     own = [p for p in merged if p["owner"] == USER]
-    detail = f"{len(upstream)} 个提给他人仓库" + (f" · {len(own)} 个自有项目" if own else "")
+    # 2026-11-02：不再重复焦点数字（原文案「N 个已被合并（N 个提给他人仓库）」把同一个数写了两遍）
+    parts = [f"分布在 {len({p['repo'] for p in upstream})} 个上游仓库"]
+    if own:
+        parts.append(f"{len(own)} 个自有项目")
     lines = ["<!-- STATS:BEGIN -->",
-             f"<sub>**{len(merged)}** 个 PR 已被合并（{detail}）· 数据由 "
+             f"<sub>**{len(merged)}** 个 PR 已被合并，{' · '.join(parts)} · 数据由 "
              "[`generate_stats.py`](./scripts/generate_stats.py) 每日直连 GitHub API 刷新</sub>",
              "<!-- STATS:END -->"]
     return re.sub(r"<!-- STATS:BEGIN -->.*?<!-- STATS:END -->", "\n".join(lines), md, flags=re.S)
