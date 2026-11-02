@@ -101,15 +101,29 @@ def gh_api(path: str) -> dict:
 
 
 def search_prs(user: str) -> list[dict]:
-    items, page = [], 1
+    """只搜**已合并**的 PR。
+
+    加 `is:merged` 有两个作用：
+    ① 不把 closed / open 的 PR 也抓回来——每条都得再请求 /pulls/{n} 才知道合没合，
+       那些请求纯属浪费配额（实测可省掉 3/4 的 pulls 调用）；
+    ② search API 单次查询最多返回 1000 条，这 1000 条应该全部留给要统计的对象。
+
+    另外：以前翻到第 10 页就静默 break，PR 多了会悄悄少算。现在把
+    `total_count` 和实取条数比一下，截断了就明说，别让数字无声地偏小。
+    """
+    items, page, total = [], 1, 0
     while True:
-        data = gh_api(f"/search/issues?q=author:{user}+type:pr"
+        data = gh_api(f"/search/issues?q=author:{user}+type:pr+is:merged"
                       f"&per_page=100&page={page}&sort=created&order=desc")
+        total = data.get("total_count") or total
         batch = data.get("items", [])
         items.extend(batch)
         if len(batch) < 100 or page >= 10:
             break
         page += 1
+    if total > len(items):
+        print(f"  ! 已合并 PR 共 {total} 条，search 只取到前 {len(items)} 条（上限 1000）。"
+              f"卡片数字会偏小——需要按仓库维度精确统计", file=sys.stderr)
     return items
 
 
