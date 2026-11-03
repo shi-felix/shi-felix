@@ -9,7 +9,7 @@
 </picture>
 
 <!-- STATS:BEGIN -->
-<sub>**48** 个 PR 已被合并，分布在 7 个上游仓库 · 数据由 [`generate_stats.py`](./scripts/generate_stats.py) 每日直连 GitHub API 刷新</sub>
+<sub>**53** 个 PR 已被合并，分布在 7 个上游仓库 · 数据由 [`generate_stats.py`](./scripts/generate_stats.py) 每日直连 GitHub API 刷新</sub>
 <!-- STATS:END -->
 
 ## 代表项目
