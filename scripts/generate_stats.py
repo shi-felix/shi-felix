@@ -45,6 +45,11 @@ ASSETS = ROOT / "assets"
 README = ROOT / "README.md"
 TZ8 = timezone(timedelta(hours=8))
 
+# 卡片仓库行的 ★ 门槛（2026-11-08）：低于这个数不上卡片 —— 6★ 的玩具仓混在 160k★
+# 的项目里，稀释的是整张卡的可信度。**只作用于展示行**，不影响焦点数字与副标题的
+# 统计口径（那两处说的是全部已合并 PR），页脚会注明本卡按此门槛筛选。
+MIN_STARS = 200
+
 # ---------------------------------------------------------------- GitHub Primer 色值
 # 2026-10-26 重设计：编辑排版风 —— SVG 透明背景融入 GitHub 页面，
 # 不再使用卡片底色/边框，只靠发丝线 + 字距 + 单一 merged 紫点缀。
@@ -305,7 +310,13 @@ def card_merged(prs: list[dict], C: dict, avatars: dict[str, str]) -> str:
     # dsh-task-ledger 三处真实贡献收进了一行省略号里 —— 副标题说 9 个仓库，往下数只有 6 行，
     # 属于「说了却不给看」。仓库行本身就是这张卡的证据，全部展开；
     # 卡片高度由行数决定（H 在下面按 y 累加算出），无需另调尺寸。
-    shown = list(groups.items())
+    #
+    # 同日追加 ★ 阈值：低于 200★ 的仓库不上卡（6★ 的玩具仓混在 160k★ 的项目里，
+    # 稀释的是整张卡的可信度）。阈值只作用于「展示」，不作用于统计口径：
+    # 焦点数字与副标题仍是全部上游仓库，页脚明写「仅列 ★200 以上」，
+    # 读者不会把少掉的那一行当成漏算。
+    shown = [(repo, items) for repo, items in groups.items()
+             if max(p.get("stars") or 0 for p in items) >= MIN_STARS]
 
     b: list[str] = []
     defs: list[str] = []
@@ -380,7 +391,8 @@ def card_merged(prs: list[dict], C: dict, avatars: dict[str, str]) -> str:
             f'<title>已合并的 Pull Request · github.com/{USER}</title>',
             '<defs>', *defs, '</defs>']
     tail = [f'<line x1="{L}" y1="{fy}" x2="{R}" y2="{fy}" stroke="{C["hair"]}"/>',
-            tx(L, fy + 28, "数据来源 GitHub REST API · 每日自动刷新", 12, C["text3"]),
+            tx(L, fy + 28, f"仅列 ★{MIN_STARS} 以上的仓库 · 数据来源 GitHub REST API · 每日自动刷新",
+               12, C["text3"]),
             tx(R, fy + 28, f"更新于 {stamp}", 12, C["text3"], "normal", "end", MONO),
             '</svg>']
     return "\n".join(head + b + tail) + "\n"
