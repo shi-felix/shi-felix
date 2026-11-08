@@ -301,9 +301,11 @@ def card_merged(prs: list[dict], C: dict, avatars: dict[str, str]) -> str:
     groups = dict(sorted(
         groups.items(),
         key=lambda kv: (-max(p.get("stars") or 0 for p in kv[1]), -len(kv[1]))))
-    TOP = 6
-    shown = list(groups.items())[:TOP]
-    rest = len(groups) - len(shown)
+    # 2026-11-08：取消 TOP=6 折叠。「… 另有 3 个仓库已合并 PR」把 folio、dify-plugins、
+    # dsh-task-ledger 三处真实贡献收进了一行省略号里 —— 副标题说 9 个仓库，往下数只有 6 行，
+    # 属于「说了却不给看」。仓库行本身就是这张卡的证据，全部展开；
+    # 卡片高度由行数决定（H 在下面按 y 累加算出），无需另调尺寸。
+    shown = list(groups.items())
 
     b: list[str] = []
     defs: list[str] = []
@@ -367,12 +369,6 @@ def card_merged(prs: list[dict], C: dict, avatars: dict[str, str]) -> str:
         b.append(f'<g transform="translate({sx:.1f} {y - 12.5}) scale(0.875)" '
                  f'fill="{C["text2"]}"><path d="{STAR16}"/></g>')
         b.append(tx(R, y, star, 14, C["text2"], "600", "end", MONO))
-        y += 54
-    if rest > 0:
-        if shown:
-            b.append(f'<line x1="{NX}" y1="{y - 27}" x2="{R}" y2="{y - 27}" '
-                     f'stroke="{C["hair"]}"/>')
-        b.append(tx(NX, y, f"… 另有 {rest} 个仓库已合并 PR", 13.5, C["text3"], "500"))
         y += 54
 
     fy = y - 10
